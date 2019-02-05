@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://smbaiwsy.com/2016/complete-task"
+	targetNamespace="http://smbaiwsy.com/2016/complete-task"
+	elementFormDefault="qualified">
+
+	<xs:element name="getCustomerRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="id" type="xs:long" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="getCustomerResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="customer" type="tns:customer" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="setCustomerRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="customer" type="tns:customer" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="setCustomerResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="customer" type="tns:customer" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="setCustomerDetailsRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="customerDetails" type="tns:customerDetails" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="setCustomerDetailsResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="customer" type="tns:customer" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+
+
+	<xs:complexType name="customer">
+		<xs:sequence>
+			<xs:element name="customerId" type="xs:long" />
+			<xs:element minOccurs="1" name="name" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="phoneNumber" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="email" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="DOB" type="xs:date" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="customerDetails">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="1" name="customerId" type="xs:long" />
+			<xs:element minOccurs="1" name="name" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="phoneNumber" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="email" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="DOB" type="xs:date" />
+		</xs:sequence>
+	</xs:complexType>
+	
+</xs:schema>
