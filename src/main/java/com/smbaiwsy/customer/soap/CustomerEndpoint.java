@@ -8,7 +8,6 @@ import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
-import com.smbaiwsy.customer.data.CustomerDAO;
 import com.smbaiwsy.customer.soap.error.CustomerNotFoundError;
 import com.smbaiwsy.customer.soap.error.NameCanNotBeNullError;
 
@@ -20,6 +19,7 @@ import com.smbaiwsy.customer.jaxb.SetCustomerDetailsRequest;
 import com.smbaiwsy.customer.jaxb.SetCustomerDetailsResponse;
 import com.smbaiwsy.customer.jaxb.SetCustomerRequest;
 import com.smbaiwsy.customer.jaxb.SetCustomerResponse;
+import com.smbaiwsy.customer.service.CustomerService;
 
 /**
  * An implementation of a SOAP Endpoint
@@ -32,13 +32,8 @@ public class CustomerEndpoint {
 	private static final String NAMESPACE_URI = "http://smbaiwsy.com/2016/complete-task";
 	private static final Logger log = LoggerFactory.getLogger(CustomerEndpoint.class);
 
-//	@Autowired
-	private CustomerDAO customerDAO;
-
 	@Autowired
-	public CustomerEndpoint(CustomerDAO customerDAO) {
-		this.customerDAO = customerDAO;
-	}
+	private CustomerService customerService;
 
 	/**
 	 * For the received instance of {@see GetCustomerRequest} returns corresponding
@@ -52,9 +47,9 @@ public class CustomerEndpoint {
 	public GetCustomerResponse getCustomer(@RequestPayload GetCustomerRequest request) {
 		long requestId = request.getId();
 		if (requestId <= 0) {
-			throw new RuntimeException("Customer Not Found");
+			throw new CustomerNotFoundError();
 		}
-		Customer customer = customerDAO.findCustomerById(requestId);
+		Customer customer = customerService.findCustomerById(requestId);
 		if (customer.getCustomerId() == -1L) {
 			throw new CustomerNotFoundError();
 		}
@@ -79,7 +74,7 @@ public class CustomerEndpoint {
 		if (customer.getName() == null) {
 			throw new NameCanNotBeNullError();
 		}
-		Customer cust = customerDAO.createOrUpdateCustomer(customer);
+		Customer cust = customerService.createOrUpdateCustomer(customer);
 		SetCustomerResponse response = new SetCustomerResponse();
 		response.setCustomer(cust);
 
@@ -101,9 +96,8 @@ public class CustomerEndpoint {
 		if (customerDetails.getName() == null) {
 			throw new NameCanNotBeNullError();
 		}
-		log.info("What is this?" + (customerDAO != null));
-		Customer customer = customerDAO.fromCustomerDetails(customerDetails);
-		Customer cust = customerDAO.createOrUpdateCustomer(customer);
+		Customer customer = customerService.fromCustomerDetails(customerDetails);
+		Customer cust = customerService.createOrUpdateCustomer(customer);
 		SetCustomerDetailsResponse response = new SetCustomerDetailsResponse();
 		response.setCustomer(cust);
 
