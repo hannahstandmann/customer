@@ -7,7 +7,7 @@ import org.springframework.ws.soap.server.endpoint.annotation.SoapFault;
  * @author ana mattuzzi-stojanovic
  *
  */
-@SoapFault(faultCode = FaultCode.SERVER, faultStringOrReason = "Customer not found!")
+@SoapFault(faultCode = FaultCode.RECEIVER, faultStringOrReason = "Customer not found!")
 public class CustomerNotFoundError extends RuntimeException{
 
 	/**

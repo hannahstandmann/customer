@@ -7,7 +7,7 @@ import org.springframework.ws.soap.server.endpoint.annotation.SoapFault;
  * @author ana mattuzzi-stojanovic
  *
  */
-@SoapFault(faultCode = FaultCode.SERVER, faultStringOrReason = "Can't create customer without the name")
+@SoapFault(faultCode = FaultCode.SENDER, faultStringOrReason = "Can't create customer without the name")
 public class NameCanNotBeNullError extends RuntimeException{
 
 	/**

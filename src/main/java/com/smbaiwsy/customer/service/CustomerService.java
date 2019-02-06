@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import com.smbaiwsy.customer.data.CustomerEntity;
 import com.smbaiwsy.customer.data.CustomerRepository;
 import com.smbaiwsy.customer.jaxb.Customer;
-import com.smbaiwsy.customer.jaxb.CustomerDetails;
+import com.smbaiwsy.customer.rest.CustomerWrapper;
 
 /**
  * Actually the service
@@ -76,19 +76,22 @@ public class CustomerService {
 	 * @param entity the instance of {@see CustomerEntity} found in the database
 	 * @return the instance of {@see Customer} DTO
 	 */
-	public Customer fromEntity(CustomerEntity entity) {
-		Customer customer = new Customer();
+	public CustomerWrapper fromEntity(CustomerEntity entity) {
+		
+		CustomerWrapper wrapper = new CustomerWrapper();
+		wrapper.setId(-1L);
 		if (entity != null) {
-			customer.setCustomerId(entity.getId());
+			//customer.setCustomerId(entity.getId());
+			Customer customer = new Customer();
 			customer.setName(entity.getName());
 			customer.setPhoneNumber(entity.getPhoneNumber());
 			customer.setEmail(entity.getEmail());
 			customer.setDOB(toXMLGregorianCalendar(
 					Optional.ofNullable(entity.getDOB()).orElse(new java.sql.Date(System.currentTimeMillis()))));
-		} else {
-			customer.setCustomerId(-1L);
-		}
-		return customer;
+			wrapper.setId(entity.getId());
+			wrapper.setCustomer(customer);
+		} 
+		return wrapper;
 	}
 
 	/**
@@ -98,10 +101,10 @@ public class CustomerService {
 	 * @return {@see Customer} DTO converted from an existing {@see CustomerEntity}
 	 *         or from the received object
 	 */
-	public Customer createOrUpdateCustomer(Customer customer) {
+	public CustomerWrapper createOrUpdateCustomer(long customerId, Customer customer) {
 		CustomerEntity entity = null;
-		if (customer.getCustomerId() != 0) {
-			entity = customerRepository.getOne(customer.getCustomerId());
+		if (customerId != 0 && customerId != -1) {
+			entity = customerRepository.getOne(customerId);
 		} else {
 			entity = new CustomerEntity(customer.getName());
 		}
@@ -136,7 +139,7 @@ public class CustomerService {
 	 * @param id the id of the customer
 	 * @return the {@see Customer} of the found customer
 	 */
-	public Customer findCustomerById(long id) {
+	public CustomerWrapper findCustomerById(long id) {
 		Optional<CustomerEntity> entity = customerRepository.findById(id);
 		return entity.map(o -> fromEntity(o))
 		.orElse(fromEntity(null));
@@ -147,7 +150,7 @@ public class CustomerService {
 	 * 
 	 * @param details a {@see CustomerDetails} object
 	 * @return customer a corresponding {@see Customer} object
-	 */
+	 
 	public Customer fromCustomerDetails(CustomerDetails details) {
 		Customer customer = new Customer();
 		if (details.getCustomerId() != null && details.getCustomerId() > 0) {
@@ -164,5 +167,5 @@ public class CustomerService {
 			customer.setDOB(details.getDOB());
 		}
 		return customer;
-	}
+	}*/
 }

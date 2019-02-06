@@ -20,8 +20,10 @@ import com.smbaiwsy.customer.jaxb.Customer;
 import com.smbaiwsy.customer.service.CustomerService;
 import com.smbaiwsy.customer.soap.error.CustomerNotFoundError;
 import com.smbaiwsy.customer.soap.error.NameCanNotBeNullError;
+
 /**
  * The rest controller
+ * 
  * @author ana mattuzzi-stojanovic
  *
  */
@@ -32,39 +34,45 @@ public class CustomerController {
 
 	@Autowired
 	private CustomerService customerService;
+
 	/**
-	 * REST Endpoint to get customer by id 
+	 * REST Endpoint to get customer by id
+	 * 
 	 * @param id the id of the customer
 	 * @return the {@see Customer} DTO for the given id
 	 */
 	@RequestMapping(method = RequestMethod.GET, value = "/customers/{id}")
 	public Customer getCustomer(@PathVariable(value = "id") long id) {
-		Customer customer = customerService.findCustomerById(id);
-		if (customer.getCustomerId() == -1L) {
+		CustomerWrapper customer = customerService.findCustomerById(id);
+		if (customer.getId() == -1L) {
 			throw new CustomerNotFoundError();
 		}
-		return customer;
+		return customer.getCustomer();
 	}
-    
+
 	/**
 	 * updates the customer
+	 * 
 	 * @param customerId the id of the customer
-	 * @param customer the {@see Customer} DTO
+	 * @param customer   the {@see Customer} DTO
 	 * @return the updated {@see Customer}
 	 */
 	@RequestMapping(method = RequestMethod.PUT, value = "/customers/{id}")
-	public Customer setCustomer(@PathVariable(value = "id", required = true) long customerId,
+	public CustomerWrapper setCustomer(@PathVariable(value = "id", required = true) long customerId,
 			@RequestBody @Valid final Customer customer) {
-		if (customerService.findCustomerById(customerId).getCustomerId() == -1L) {
+		if (customer.getName() == null) {
+			throw new NameCanNotBeNullError();
+		}
+		if (customerService.findCustomerById(customerId).getId() == -1L) {
 			throw new CustomerNotFoundError();
 		}
-		customer.setCustomerId(customerId);
-		Customer cust = customerService.createOrUpdateCustomer(customer);
+		CustomerWrapper cust = customerService.createOrUpdateCustomer(customerId, customer);
 		return cust;
 	}
 
 	/**
 	 * REST Endpoint to create the customer
+	 * 
 	 * @param customer the {@see Customer} DTO
 	 * @return the {@see Customer} DTO converted from the created entity
 	 */
@@ -75,16 +83,28 @@ public class CustomerController {
 			throw new NameCanNotBeNullError();
 		}
 		log.info("-------------------------------");
-		Customer cust = customerService.createOrUpdateCustomer(customer);
-		return cust;
+		CustomerWrapper cust = customerService.createOrUpdateCustomer(-1, customer);
+		return cust.getCustomer();
 	}
 
 	/**
-	 * reacts upon exception
+	 * reacts upon CustomerNotFoundError
+	 * 
 	 * @param response the received response
-	 * @throws IOException upon the reception of the bad request
+	 * @throws IOException upon the reception of the CustomerNotFoundError
 	 */
-	@ExceptionHandler(value = {CustomerNotFoundError.class, NameCanNotBeNullError.class})
+	@ExceptionHandler(value = { CustomerNotFoundError.class })
+	void handleNotFound(HttpServletResponse response, CustomerNotFoundError exception) throws IOException {
+		response.sendError(HttpStatus.NOT_FOUND.value(), exception.getMessage());
+	}
+
+	/**
+	 * reacts upon NameCanNotBeNullError
+	 * 
+	 * @param response the received response
+	 * @throws IOException upon the reception of the NameCanNotBeNullError
+	 */
+	@ExceptionHandler(value = { NameCanNotBeNullError.class })
 	void handleBadRequests(HttpServletResponse response, RuntimeException exception) throws IOException {
 		response.sendError(HttpStatus.BAD_REQUEST.value(), exception.getMessage());
 	}

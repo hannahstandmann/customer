@@ -12,13 +12,11 @@ import com.smbaiwsy.customer.soap.error.CustomerNotFoundError;
 import com.smbaiwsy.customer.soap.error.NameCanNotBeNullError;
 
 import com.smbaiwsy.customer.jaxb.Customer;
-import com.smbaiwsy.customer.jaxb.CustomerDetails;
-import com.smbaiwsy.customer.jaxb.GetCustomerRequest;
-import com.smbaiwsy.customer.jaxb.GetCustomerResponse;
+import com.smbaiwsy.customer.jaxb.GetCustomerDetailsRequest;
+import com.smbaiwsy.customer.jaxb.GetCustomerDetailsResponse;
 import com.smbaiwsy.customer.jaxb.SetCustomerDetailsRequest;
 import com.smbaiwsy.customer.jaxb.SetCustomerDetailsResponse;
-import com.smbaiwsy.customer.jaxb.SetCustomerRequest;
-import com.smbaiwsy.customer.jaxb.SetCustomerResponse;
+import com.smbaiwsy.customer.rest.CustomerWrapper;
 import com.smbaiwsy.customer.service.CustomerService;
 
 /**
@@ -42,19 +40,19 @@ public class CustomerEndpoint {
 	 * @param request an instance of {@see GetCustomerRequest}
 	 * @return an instance of {@see GetCustomerResponse}
 	 */
-	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "getCustomerRequest")
+	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "getCustomerDetailsRequest")
 	@ResponsePayload
-	public GetCustomerResponse getCustomer(@RequestPayload GetCustomerRequest request) {
+	public GetCustomerDetailsResponse getCustomer(@RequestPayload GetCustomerDetailsRequest request) {
 		long requestId = request.getId();
 		if (requestId <= 0) {
 			throw new CustomerNotFoundError();
 		}
-		Customer customer = customerService.findCustomerById(requestId);
-		if (customer.getCustomerId() == -1L) {
+		CustomerWrapper customer = customerService.findCustomerById(requestId);
+		if (customer.getId() == -1L) {
 			throw new CustomerNotFoundError();
 		}
-		GetCustomerResponse response = new GetCustomerResponse();
-		response.setCustomer(customer);
+		GetCustomerDetailsResponse response = new GetCustomerDetailsResponse();
+		response.setCustomer(customer.getCustomer());
 
 		return response;
 	}
@@ -66,17 +64,19 @@ public class CustomerEndpoint {
 	 * @param request an instance of {@see SetCustomerRequest}
 	 * @return an instance of {@see SetCustomerResponse}
 	 */
-	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "setCustomerRequest")
+	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "setCustomerDetailsRequest")
 	@ResponsePayload
-	public SetCustomerResponse setCustomer(@RequestPayload SetCustomerRequest request) {
-		Customer customer = request.getCustomer();
+	public SetCustomerDetailsResponse setCustomerDetails(@RequestPayload SetCustomerDetailsRequest request) {
+		Customer customer = request.getCustomerDetails();
 		log.info(customer.getName());
 		if (customer.getName() == null) {
 			throw new NameCanNotBeNullError();
 		}
-		Customer cust = customerService.createOrUpdateCustomer(customer);
-		SetCustomerResponse response = new SetCustomerResponse();
-		response.setCustomer(cust);
+		long customerId = request.getId();
+		CustomerWrapper cust = customerService.createOrUpdateCustomer(customerId, customer);
+		SetCustomerDetailsResponse response = new SetCustomerDetailsResponse();
+		response.setId(cust.getId());
+		response.setCustomer(cust.getCustomer());
 
 		return response;
 	}
@@ -87,7 +87,7 @@ public class CustomerEndpoint {
 	 * 
 	 * @param request an instance of {@see SetCustomerDetailsRequest}
 	 * @return an instance of {@see SetCustomerDetailsResponse}
-	 */
+	 
 	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "setCustomerDetailsRequest")
 	@ResponsePayload
 	public SetCustomerDetailsResponse setCustomer(@RequestPayload SetCustomerDetailsRequest request) {
@@ -96,11 +96,12 @@ public class CustomerEndpoint {
 		if (customerDetails.getName() == null) {
 			throw new NameCanNotBeNullError();
 		}
-		Customer customer = customerService.fromCustomerDetails(customerDetails);
-		Customer cust = customerService.createOrUpdateCustomer(customer);
+		Customer customer = request.getCustomer();//customerService.fromCustomerDetails(customerDetails);
+		CustomerWrapper cust = customerService.createOrUpdateCustomer(customer);
 		SetCustomerDetailsResponse response = new SetCustomerDetailsResponse();
-		response.setCustomer(cust);
+		response.setId(cust.getId());
+		response.setCustomer(cust.getCustomer());
 
 		return response;
-	}
+	}*/
 }

@@ -4,15 +4,15 @@
 	targetNamespace="http://smbaiwsy.com/2016/complete-task"
 	elementFormDefault="qualified">
 
-	<xs:element name="getCustomerRequest">
+	<xs:element name="getCustomerDetailsRequest">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="id" type="xs:long" />
+				<xs:element name="id" type="xs:long" minOccurs="1" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 
-	<xs:element name="getCustomerResponse">
+	<xs:element name="getCustomerDetailsResponse">
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="customer" type="tns:customer" />
@@ -20,7 +20,7 @@
 		</xs:complexType>
 	</xs:element>
 
-	<xs:element name="setCustomerRequest">
+	<!-- <xs:element name="setCustomerRequest">
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="customer" type="tns:customer" />
@@ -33,17 +33,19 @@
 				<xs:element name="customer" type="tns:customer" />
 			</xs:sequence>
 		</xs:complexType>
-	</xs:element>
+	</xs:element> -->
 	<xs:element name="setCustomerDetailsRequest">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="customerDetails" type="tns:customerDetails" />
+			    <xs:element name="id" type="xs:long"/>
+				<xs:element name="customerDetails" type="tns:customer" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="setCustomerDetailsResponse">
 		<xs:complexType>
 			<xs:sequence>
+			    <xs:element name="id" type="xs:long" minOccurs="1" />
 				<xs:element name="customer" type="tns:customer" />
 			</xs:sequence>
 		</xs:complexType>
@@ -53,14 +55,14 @@
 
 	<xs:complexType name="customer">
 		<xs:sequence>
-			<xs:element name="customerId" type="xs:long" />
+			<!-- <xs:element name="customerId" type="xs:long" />  -->
 			<xs:element minOccurs="1" name="name" type="xs:string" />
 			<xs:element minOccurs="0" maxOccurs="1" name="phoneNumber" type="xs:string" />
 			<xs:element minOccurs="0" maxOccurs="1" name="email" type="xs:string" />
 			<xs:element minOccurs="0" maxOccurs="1" name="DOB" type="xs:date" />
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="customerDetails">
+<!-- 	<xs:complexType name="customerDetails">
 		<xs:sequence>
 			<xs:element minOccurs="0" maxOccurs="1" name="customerId" type="xs:long" />
 			<xs:element minOccurs="1" name="name" type="xs:string" />
@@ -69,5 +71,5 @@
 			<xs:element minOccurs="0" maxOccurs="1" name="DOB" type="xs:date" />
 		</xs:sequence>
 	</xs:complexType>
-	
+-->
 </xs:schema>

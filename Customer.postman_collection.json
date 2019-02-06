@@ -1,0 +1,389 @@
+{
+	"info": {
+		"_postman_id": "4beec346-ff80-4e57-a093-a6d6d7aa3b38",
+		"name": "Customer",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "set Customer Details SOAP message",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbmEubWF0dHV6emlAbWUuY29tIiwic2NvcGVzIjpbeyJhdXRob3JpdHkiOiJST0xFX1VTRVIifV0sImlzcyI6Imh0dHA6Ly93aGF0ZXZlci53ZWIucnVuYm94Lm5ldCIsImlhdCI6MTU0NTY3OTE4MSwiZXhwIjoxNTQ1Njk3MTgxfQ.udl5M9MO0D5iyoAe_W9y8iVzJmoRSLgRepSu3941mRU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "text/xml",
+						"type": "text"
+					},
+					{
+						"key": "x-auth-token",
+						"value": "25234a24-a96a-4328-8be7-17300fb49346",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\r\n\t\t\t\t  xmlns:gs=\"http://smbaiwsy.com/2016/complete-task\">\r\n   <soapenv:Header/>\r\n   <soapenv:Body>\r\n      <gs:setCustomerDetailsRequest>\r\n         <gs:customerDetails>\r\n         \t<gs:name>Hannah Standmann</gs:name>\r\n         \t<gs:phoneNumber>+3811234567</gs:phoneNumber>\r\n         \t<gs:email>smbaiwsy@gmail.com</gs:email>\r\n         \t<gs:DOB>1974-07-28+01:00</gs:DOB>\r\n         </gs:customerDetails>\r\n      </gs:setCustomerDetailsRequest>\r\n   </soapenv:Body>\r\n</soapenv:Envelope>"
+				},
+				"url": {
+					"raw": "localhost:8090/ws/",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"ws",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update Customer Details SOAP message",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbmEubWF0dHV6emlAbWUuY29tIiwic2NvcGVzIjpbeyJhdXRob3JpdHkiOiJST0xFX1VTRVIifV0sImlzcyI6Imh0dHA6Ly93aGF0ZXZlci53ZWIucnVuYm94Lm5ldCIsImlhdCI6MTU0NTY3OTE4MSwiZXhwIjoxNTQ1Njk3MTgxfQ.udl5M9MO0D5iyoAe_W9y8iVzJmoRSLgRepSu3941mRU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "text/xml"
+					},
+					{
+						"key": "x-auth-token",
+						"type": "text",
+						"value": "25234a24-a96a-4328-8be7-17300fb49346",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\r\n\t\t\t\t  xmlns:gs=\"http://smbaiwsy.com/2016/complete-task\">\r\n   <soapenv:Header/>\r\n   <soapenv:Body>\r\n      <gs:setCustomerDetailsRequest>\r\n      \t <gs:id>6</gs:id>\r\n         <gs:customerDetails>\r\n         \t<gs:name>Hannah Standmann</gs:name>\r\n         \t<gs:phoneNumber>+381611234567</gs:phoneNumber>\r\n         \t<gs:email>smbaiwsy@gmail.com</gs:email>\r\n         \t<gs:DOB>1974-07-28+01:00</gs:DOB>\r\n         </gs:customerDetails>\r\n      </gs:setCustomerDetailsRequest>\r\n   </soapenv:Body>\r\n</soapenv:Envelope>"
+				},
+				"url": {
+					"raw": "localhost:8090/ws/",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"ws",
+						""
+					]
+				},
+				"description": "update Customer Details SOAP message"
+			},
+			"response": []
+		},
+		{
+			"name": "get Customer Details SOAP message",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "text/xml",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\r\n\t\t\t\t  xmlns:gs=\"http://smbaiwsy.com/2016/complete-task\">\r\n   <soapenv:Header/>\r\n   <soapenv:Body>\r\n      <gs:getCustomerDetailsRequest>\r\n         <gs:id>6</gs:id>\r\n      </gs:getCustomerDetailsRequest>\r\n   </soapenv:Body>\r\n</soapenv:Envelope>"
+				},
+				"url": {
+					"raw": "localhost:8090/ws",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"ws"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Non Existing customer",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "text/xml",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\r\n\t\t\t\t  xmlns:gs=\"http://smbaiwsy.com/2016/complete-task\">\r\n   <soapenv:Header/>\r\n   <soapenv:Body>\r\n      <gs:getCustomerDetailsRequest>\r\n         <gs:id>8</gs:id>\r\n      </gs:getCustomerDetailsRequest>\r\n   </soapenv:Body>\r\n</soapenv:Envelope>"
+				},
+				"url": {
+					"raw": "localhost:8090/ws",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"ws"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "missing name SOAP message",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbmEubWF0dHV6emlAbWUuY29tIiwic2NvcGVzIjpbeyJhdXRob3JpdHkiOiJST0xFX1VTRVIifV0sImlzcyI6Imh0dHA6Ly93aGF0ZXZlci53ZWIucnVuYm94Lm5ldCIsImlhdCI6MTU0NTY3OTE4MSwiZXhwIjoxNTQ1Njk3MTgxfQ.udl5M9MO0D5iyoAe_W9y8iVzJmoRSLgRepSu3941mRU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "text/xml"
+					},
+					{
+						"key": "x-auth-token",
+						"type": "text",
+						"value": "25234a24-a96a-4328-8be7-17300fb49346"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\r\n\t\t\t\t  xmlns:gs=\"http://smbaiwsy.com/2016/complete-task\">\r\n   <soapenv:Header/>\r\n   <soapenv:Body>\r\n      <gs:setCustomerDetailsRequest>\r\n      \t <gs:id>6</gs:id>\r\n         <gs:customerDetails>\r\n         \t<gs:phoneNumber>+381611234567</gs:phoneNumber>\r\n         \t<gs:email>smbaiwsy@gmail.com</gs:email>\r\n         \t<gs:DOB>1974-07-28+01:00</gs:DOB>\r\n         </gs:customerDetails>\r\n      </gs:setCustomerDetailsRequest>\r\n   </soapenv:Body>\r\n</soapenv:Envelope>"
+				},
+				"url": {
+					"raw": "localhost:8090/ws/",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"ws",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update customer details REST message",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbmEubWF0dHV6emlAbWUuY29tIiwic2NvcGVzIjpbeyJhdXRob3JpdHkiOiJST0xFX1VTRVIifV0sImlzcyI6Imh0dHA6Ly93aGF0ZXZlci53ZWIucnVuYm94Lm5ldCIsImlhdCI6MTU0NTY3ODg0OSwiZXhwIjoxNTQ1Njk2ODQ5fQ.XF07EDv7Tc4P_JEqFrLJ0gkXFBxgKDW-zy2JfrYg2GY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "x-auth-token",
+						"value": "68aa065c-befe-4a60-88c1-48071fbec023",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"Ana Mattuzzi\",\n\t\"phoneNumber\":\"+381618765432\",\n\t\"email\":\"smbaiwsy@gmail.com\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8090/customers/6",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"customers",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "save customer details REST message",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbmEubWF0dHV6emlAbWUuY29tIiwic2NvcGVzIjpbeyJhdXRob3JpdHkiOiJST0xFX1VTRVIifV0sImlzcyI6Imh0dHA6Ly93aGF0ZXZlci53ZWIucnVuYm94Lm5ldCIsImlhdCI6MTU0NTY3ODg0OSwiZXhwIjoxNTQ1Njk2ODQ5fQ.XF07EDv7Tc4P_JEqFrLJ0gkXFBxgKDW-zy2JfrYg2GY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "x-auth-token",
+						"value": "68aa065c-befe-4a60-88c1-48071fbec023",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"Ana Mattuzzi\",\n\t\"phoneNumber\":\"+381618765432\",\n\t\"email\":\"smbaiwsy@gmail.com\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8090/customers/6",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"customers",
+						"6"
+					]
+				},
+				"description": "save customer details REST message"
+			},
+			"response": []
+		},
+		{
+			"name": "get customer details REST message",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8090/customers/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"customers",
+						"1"
+					]
+				},
+				"description": "get customer details REST message"
+			},
+			"response": []
+		},
+		{
+			"name": "Non Existing customer REST request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8090/customers/8",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"customers",
+						"8"
+					]
+				},
+				"description": "Non Existing customer REST request"
+			},
+			"response": []
+		},
+		{
+			"name": "missing name REST message",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbmEubWF0dHV6emlAbWUuY29tIiwic2NvcGVzIjpbeyJhdXRob3JpdHkiOiJST0xFX1VTRVIifV0sImlzcyI6Imh0dHA6Ly93aGF0ZXZlci53ZWIucnVuYm94Lm5ldCIsImlhdCI6MTU0NTY3ODg0OSwiZXhwIjoxNTQ1Njk2ODQ5fQ.XF07EDv7Tc4P_JEqFrLJ0gkXFBxgKDW-zy2JfrYg2GY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "x-auth-token",
+						"value": "68aa065c-befe-4a60-88c1-48071fbec023",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"phoneNumber\":\"+381618765432\",\n\t\"email\":\"smbaiwsy@gmail.com\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8090/customers",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"customers"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
