@@ -259,7 +259,7 @@
 						}
 					]
 				},
-				"method": "PUT",
+				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -270,7 +270,8 @@
 					{
 						"key": "x-auth-token",
 						"value": "68aa065c-befe-4a60-88c1-48071fbec023",
-						"type": "text"
+						"type": "text",
+						"disabled": true
 					}
 				],
 				"body": {
@@ -278,14 +279,13 @@
 					"raw": "{\n\t\"name\":\"Ana Mattuzzi\",\n\t\"phoneNumber\":\"+381618765432\",\n\t\"email\":\"smbaiwsy@gmail.com\"\n}"
 				},
 				"url": {
-					"raw": "localhost:8090/customers/6",
+					"raw": "localhost:8090/customers",
 					"host": [
 						"localhost"
 					],
 					"port": "8090",
 					"path": [
-						"customers",
-						"6"
+						"customers"
 					]
 				},
 				"description": "save customer details REST message"

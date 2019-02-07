@@ -42,12 +42,12 @@ public class CustomerController {
 	 * @return the {@see Customer} DTO for the given id
 	 */
 	@RequestMapping(method = RequestMethod.GET, value = "/customers/{id}")
-	public Customer getCustomer(@PathVariable(value = "id") long id) {
-		CustomerWrapper customer = customerService.findCustomerById(id);
+	public IdentifiedCustomer getCustomer(@PathVariable(value = "id") long id) {
+		IdentifiedCustomer customer = customerService.findCustomerById(id);
 		if (customer.getId() == -1L) {
 			throw new CustomerNotFoundError();
 		}
-		return customer.getCustomer();
+		return customer;
 	}
 
 	/**
@@ -58,7 +58,7 @@ public class CustomerController {
 	 * @return the updated {@see Customer}
 	 */
 	@RequestMapping(method = RequestMethod.PUT, value = "/customers/{id}")
-	public CustomerWrapper setCustomer(@PathVariable(value = "id", required = true) long customerId,
+	public IdentifiedCustomer setCustomer(@PathVariable(value = "id", required = true) long customerId,
 			@RequestBody @Valid final Customer customer) {
 		if (customer.getName() == null) {
 			throw new NameCanNotBeNullError();
@@ -66,7 +66,7 @@ public class CustomerController {
 		if (customerService.findCustomerById(customerId).getId() == -1L) {
 			throw new CustomerNotFoundError();
 		}
-		CustomerWrapper cust = customerService.createOrUpdateCustomer(customerId, customer);
+		IdentifiedCustomer cust = customerService.createOrUpdateCustomer(customerId, customer);
 		return cust;
 	}
 
@@ -77,14 +77,14 @@ public class CustomerController {
 	 * @return the {@see Customer} DTO converted from the created entity
 	 */
 	@RequestMapping(method = RequestMethod.POST, value = "/customers")
-	public Customer postCustomer(@RequestBody @Valid final Customer customer) {
+	public IdentifiedCustomer postCustomer(@RequestBody @Valid final Customer customer) {
 		log.info(customer.getName());
 		if (customer.getName() == null) {
 			throw new NameCanNotBeNullError();
 		}
 		log.info("-------------------------------");
-		CustomerWrapper cust = customerService.createOrUpdateCustomer(-1, customer);
-		return cust.getCustomer();
+		IdentifiedCustomer cust = customerService.createOrUpdateCustomer(-1, customer);
+		return cust;
 	}
 
 	/**

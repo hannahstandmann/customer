@@ -8,7 +8,7 @@ import com.smbaiwsy.customer.jaxb.Customer;
  * @author ana mattuzzi-stojanovic
  *
  */
-public class CustomerWrapper {
+public class IdentifiedCustomer {
 	/**
 	 * the id of the customer
 	 */

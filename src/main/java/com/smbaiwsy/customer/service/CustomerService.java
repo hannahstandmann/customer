@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import com.smbaiwsy.customer.data.CustomerEntity;
 import com.smbaiwsy.customer.data.CustomerRepository;
 import com.smbaiwsy.customer.jaxb.Customer;
-import com.smbaiwsy.customer.rest.CustomerWrapper;
+import com.smbaiwsy.customer.rest.IdentifiedCustomer;
 
 /**
  * Actually the service
@@ -76,9 +76,9 @@ public class CustomerService {
 	 * @param entity the instance of {@see CustomerEntity} found in the database
 	 * @return the instance of {@see Customer} DTO
 	 */
-	public CustomerWrapper fromEntity(CustomerEntity entity) {
+	public IdentifiedCustomer fromEntity(CustomerEntity entity) {
 		
-		CustomerWrapper wrapper = new CustomerWrapper();
+		IdentifiedCustomer wrapper = new IdentifiedCustomer();
 		wrapper.setId(-1L);
 		if (entity != null) {
 			//customer.setCustomerId(entity.getId());
@@ -101,7 +101,7 @@ public class CustomerService {
 	 * @return {@see Customer} DTO converted from an existing {@see CustomerEntity}
 	 *         or from the received object
 	 */
-	public CustomerWrapper createOrUpdateCustomer(long customerId, Customer customer) {
+	public IdentifiedCustomer createOrUpdateCustomer(long customerId, Customer customer) {
 		CustomerEntity entity = null;
 		if (customerId != 0 && customerId != -1) {
 			entity = customerRepository.getOne(customerId);
@@ -139,7 +139,7 @@ public class CustomerService {
 	 * @param id the id of the customer
 	 * @return the {@see Customer} of the found customer
 	 */
-	public CustomerWrapper findCustomerById(long id) {
+	public IdentifiedCustomer findCustomerById(long id) {
 		Optional<CustomerEntity> entity = customerRepository.findById(id);
 		return entity.map(o -> fromEntity(o))
 		.orElse(fromEntity(null));

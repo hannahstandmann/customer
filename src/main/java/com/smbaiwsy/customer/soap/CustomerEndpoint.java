@@ -16,7 +16,7 @@ import com.smbaiwsy.customer.jaxb.GetCustomerDetailsRequest;
 import com.smbaiwsy.customer.jaxb.GetCustomerDetailsResponse;
 import com.smbaiwsy.customer.jaxb.SetCustomerDetailsRequest;
 import com.smbaiwsy.customer.jaxb.SetCustomerDetailsResponse;
-import com.smbaiwsy.customer.rest.CustomerWrapper;
+import com.smbaiwsy.customer.rest.IdentifiedCustomer;
 import com.smbaiwsy.customer.service.CustomerService;
 
 /**
@@ -47,7 +47,7 @@ public class CustomerEndpoint {
 		if (requestId <= 0) {
 			throw new CustomerNotFoundError();
 		}
-		CustomerWrapper customer = customerService.findCustomerById(requestId);
+		IdentifiedCustomer customer = customerService.findCustomerById(requestId);
 		if (customer.getId() == -1L) {
 			throw new CustomerNotFoundError();
 		}
@@ -73,7 +73,7 @@ public class CustomerEndpoint {
 			throw new NameCanNotBeNullError();
 		}
 		long customerId = request.getId();
-		CustomerWrapper cust = customerService.createOrUpdateCustomer(customerId, customer);
+		IdentifiedCustomer cust = customerService.createOrUpdateCustomer(customerId, customer);
 		SetCustomerDetailsResponse response = new SetCustomerDetailsResponse();
 		response.setId(cust.getId());
 		response.setCustomer(cust.getCustomer());
